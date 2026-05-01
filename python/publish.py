@@ -28,6 +28,12 @@ def main() -> None:
         logger.error(f"Dataset not found at {DATASET_DIR}. Run merge first.")
         sys.exit(1)
 
+    notebook_src = Path("notebook.ipynb")
+    if notebook_src.exists():
+        import shutil
+        shutil.copy(notebook_src, DATASET_DIR / notebook_src.name)
+        logger.info(f"Copied {notebook_src} to {DATASET_DIR}")
+
     version_notes = sys.argv[1] if len(sys.argv) > 1 else ""
     username = get_kaggle_username()
     handle = f"{username}/{DATASET_SLUG}"
