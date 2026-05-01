@@ -7,6 +7,8 @@ A pipeline that downloads, merges, deduplicates, and publishes mushroom image da
 
 The combined dataset is published at [kaggle.com/datasets/dariobaumberger/combined-kaggle-mushrooms-dataset](https://www.kaggle.com/datasets/dariobaumberger/combined-kaggle-mushrooms-dataset).
 
+This project was developed as part of a Data Science Project Module at [HSLU (Hochschule Luzern)](https://www.hslu.ch).
+
 ## What it does
 
 1. **Download** — fetches source datasets from Kaggle via `kagglehub`
