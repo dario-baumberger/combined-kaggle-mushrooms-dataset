@@ -1,6 +1,7 @@
 # Combined Kaggle Mushrooms Dataset
 
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+[![Kaggle](https://img.shields.io/badge/Kaggle-Dataset-20BEFF?logo=kaggle)](https://www.kaggle.com/datasets/dariobaumberger/combined-kaggle-mushrooms-dataset)
 
 A pipeline that downloads, merges, deduplicates, and publishes mushroom image datasets from Kaggle into a single unified dataset. All images are normalized to WebP format at max 500px on the longest side and named consistently by species.
 
