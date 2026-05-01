@@ -11,12 +11,13 @@ from tqdm import tqdm
 
 
 class DatasetInfo(TypedDict):
-    local_path: Path   # The root of the downloaded dataset
+    local_path: Path  # The root of the downloaded dataset
     species_root: str  # The relative sub-path to where species folders live
     url: str
     description: str
     license: str
     license_url: str
+
 
 TARGET_DATASET_DIR: Path = Path("data/combined-kaggle-mushrooms-dataset")
 SUPPORTED_IMAGE_EXTENSIONS: set[str] = {".jpg", ".jpeg", ".png", ".webp"}
@@ -41,6 +42,7 @@ DATASET_METADATA: dict[str, DatasetInfo] = {
 logging.basicConfig(level=logging.INFO)
 logger: logging.Logger = logging.getLogger(__name__)
 
+
 def process_image(source_path: Path, species_name: str) -> tuple[str, str, bytes]:
     """Converts image to WebP in memory, returns (species, md5, bytes)."""
     buf = io.BytesIO()
@@ -51,11 +53,12 @@ def process_image(source_path: Path, species_name: str) -> tuple[str, str, bytes
     data = buf.getvalue()
     return species_name, hashlib.md5(data).hexdigest(), data
 
+
 def generate_dataset_readme(species_to_sources_map: dict[str, set[str]]) -> None:
     """Generates a README.md with source metadata and species counts."""
     readme_lines: list[str] = [
         "# Combined Mushroom Dataset\n",
-        "## Sources\n| Source | Description | License |\n|---|---|---|"
+        "## Sources\n| Source | Description | License |\n|---|---|---|",
     ]
 
     for source_id, metadata in DATASET_METADATA.items():
@@ -72,6 +75,7 @@ def generate_dataset_readme(species_to_sources_map: dict[str, set[str]]) -> None
         readme_lines.append(f"| {species} | {image_count} | {sources_list} |")
 
     (TARGET_DATASET_DIR / "README.md").write_text("\n".join(readme_lines), encoding="utf-8")
+
 
 def main(max_workers: int = 8) -> None:
     if TARGET_DATASET_DIR.exists():
@@ -106,10 +110,7 @@ def main(max_workers: int = 8) -> None:
     species_counters: dict[str, int] = {}
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = {
-            executor.submit(process_image, img_path, species): None
-            for img_path, species in processing_tasks
-        }
+        futures = {executor.submit(process_image, img_path, species): None for img_path, species in processing_tasks}
 
         for future in tqdm(as_completed(futures), total=len(futures), desc="Processing and Deduplicating"):
             try:
@@ -126,6 +127,7 @@ def main(max_workers: int = 8) -> None:
 
     generate_dataset_readme(species_to_sources_map)
     logger.info(f"Complete. Dataset at {TARGET_DATASET_DIR}")
+
 
 if __name__ == "__main__":
     main()
