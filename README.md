@@ -17,7 +17,7 @@ The combined dataset is published at [kaggle.com/datasets/dariobaumberger/combin
 
 | Dataset | Description | License |
 |---|---|---|
-| [thehir0/mushroom-species](https://www.kaggle.com/datasets/thehir0/mushroom-species) | 50,000+ photos of 100 mushroom species taken in Russia | [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) |
+| [thehir0/mushroom-species](https://www.kaggle.com/datasets/thehir0/mushroom-species) | 100k+ photos of 100+ mushroom species taken in Russia | [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) |
 | [zlatan599/mushroom1](https://www.kaggle.com/datasets/zlatan599/mushroom1) | Images of 100+ mushroom species | [MIT](https://opensource.org/licenses/MIT) |
 
 ## License
