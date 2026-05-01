@@ -31,6 +31,7 @@ def main() -> None:
     notebook_src = Path("notebook.ipynb")
     if notebook_src.exists():
         import shutil
+
         shutil.copy(notebook_src, DATASET_DIR / notebook_src.name)
         logger.info(f"Copied {notebook_src} to {DATASET_DIR}")
 
