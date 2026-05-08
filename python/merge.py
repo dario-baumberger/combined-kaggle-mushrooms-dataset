@@ -287,8 +287,15 @@ def main(max_workers: int = os.cpu_count(), batch_size: int = 1000) -> None:
                             saved_species, saved_source, saved_src, saved_out = unique_hashes[content_hash]
                             if saved_species != species_name:
                                 cross_species_duplicates.append(
-                                    (content_hash, saved_species, saved_source, saved_src,
-                                     species_name, source_id, src_path)
+                                    (
+                                        content_hash,
+                                        saved_species,
+                                        saved_source,
+                                        saved_src,
+                                        species_name,
+                                        source_id,
+                                        src_path,
+                                    )
                                 )
                                 if saved_out is not None and saved_out.exists():
                                     saved_out.unlink()
