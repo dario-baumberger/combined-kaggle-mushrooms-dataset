@@ -30,7 +30,7 @@ def main():
     cache_path.mkdir(parents=True, exist_ok=True)
     os.environ["KAGGLEHUB_CACHE"] = str(cache_path)
 
-    datasets = ["thehir0/mushroom-species", "zlatan599/mushroom1"]
+    datasets = ["thehir0/mushroom-species", "zlatan599/mushroom1", "iftekhar08/mo-106", "derekkunowilliams/mushrooms", "zedsden/mushroom-classification-dataset", "tinkhoav/mushroom-classification"]
 
     with ThreadPoolExecutor(max_workers=len(datasets)) as executor:
         executor.map(download_dataset, datasets)
