@@ -7,6 +7,11 @@ on:
         description: Version notes
         required: true
         default: ""
+      dry_run:
+        description: Dry run (skip Kaggle upload and GitHub release)
+        type: boolean
+        required: false
+        default: true
 
 jobs:
   lint:
@@ -64,10 +69,10 @@ jobs:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
           TQDM_MININTERVAL: '10'
-        run: uv run python -m python.publish "${{ github.event.inputs.version_notes }}"
+        run: uv run python -m python.publish "${{ github.event.inputs.version_notes }}"${{ github.event.inputs.dry_run == 'true' && ' --dry-run' || '' }}
 
       - name: Create GitHub Release
-        if: steps.publish.outputs.kaggle_version != ''
+        if: steps.publish.outputs.kaggle_version != '' && github.event.inputs.dry_run != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

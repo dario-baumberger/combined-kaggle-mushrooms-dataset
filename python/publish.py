@@ -50,9 +50,16 @@ def main() -> None:
         logger.error(f"Dataset not found at {DATASET_DIR}. Run merge first.")
         sys.exit(1)
 
-    version_notes = sys.argv[1] if len(sys.argv) > 1 else ""
+    args = sys.argv[1:]
+    dry_run = "--dry-run" in args
+    version_notes = next((a for a in args if a != "--dry-run"), "")
+
     username, api_token = get_kaggle_credentials()
     handle = f"{username}/{DATASET_SLUG}"
+
+    if dry_run:
+        logger.info(f"[DRY RUN] Would upload to {handle} with notes: {version_notes!r}")
+        return
 
     logger.info(f"Uploading to {handle}...")
     kagglehub.dataset_upload(handle, str(DATASET_DIR), version_notes=version_notes)
