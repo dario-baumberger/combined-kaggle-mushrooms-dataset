@@ -69,7 +69,7 @@ def main() -> None:
     logger.info(f"Done. https://www.kaggle.com/datasets/{handle}")
 
     version = get_current_kaggle_version(username, DATASET_SLUG, api_token)
-    if version:
+    if version is not None:
         logger.info(f"Published as Kaggle version {version}")
         write_github_output("kaggle_version", str(version))
 
