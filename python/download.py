@@ -35,7 +35,6 @@ def main():
         "zlatan599/mushroom1",
         "iftekhar08/mo-106",
         "derekkunowilliams/mushrooms",
-        "zedsden/mushroom-classification-dataset",
         "tinkhoav/mushroom-classification",
     ]
 
