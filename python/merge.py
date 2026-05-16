@@ -116,10 +116,11 @@ def generate_changelog(
     changed = sorted(s for s in before_set & after_set if before[s] != after[s])
     unchanged = sorted(s for s in before_set & after_set if before[s] == after[s])
 
+    kaggle_username = os.environ.get("KAGGLE_USERNAME", "dariobaumberger")
+    kaggle_url = f"https://www.kaggle.com/datasets/{kaggle_username}/{TARGET_DATASET_DIR.name}"
     lines: list[str] = [
         "# Merge Changelog\n",
-        f"[View dataset on Kaggle](https://www.kaggle.com/datasets/"
-        f"{os.environ.get('KAGGLE_USERNAME', 'dariobaumberger')}/{TARGET_DATASET_DIR.name})\n",
+        f"[View dataset on Kaggle]({kaggle_url})\n",
         "## Summary",
         f"- Species before: {len(before)}",
         f"- Species after:  {len(after)}",
