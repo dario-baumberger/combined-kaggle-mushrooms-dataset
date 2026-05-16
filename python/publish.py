@@ -31,8 +31,11 @@ def get_current_kaggle_version(username: str, slug: str, api_token: str) -> int 
     creds = base64.b64encode(f"{username}:{api_token}".encode()).decode()
     req = urllib.request.Request(url, headers={"Authorization": f"Basic {creds}"})
     try:
-        with urllib.request.urlopen(req) as resp:
+        with urllib.request.urlopen(req, timeout=30) as resp:
             return json.loads(resp.read())["currentDatasetVersionNumber"]
+    except urllib.error.HTTPError as e:
+        logger.warning(f"Could not fetch Kaggle version number: HTTP {e.code} {e.reason}")
+        return None
     except Exception as e:
         logger.warning(f"Could not fetch Kaggle version number: {e}")
         return None
