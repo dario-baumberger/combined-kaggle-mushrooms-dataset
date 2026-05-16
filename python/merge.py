@@ -97,7 +97,7 @@ def snapshot_species_image_counts(dataset_dir: Path) -> dict[str, int]:
     if not images_dir.exists():
         return {}
     return {
-        species_dir.name: len(list(species_dir.glob("*.webp")))
+        species_dir.name: sum(1 for _ in species_dir.glob("*.webp"))
         for species_dir in images_dir.iterdir()
         if species_dir.is_dir()
     }
@@ -118,7 +118,8 @@ def generate_changelog(
 
     lines: list[str] = [
         "# Merge Changelog\n",
-        "[View dataset on Kaggle](https://www.kaggle.com/datasets/dariobaumberger/combined-kaggle-mushrooms-dataset)\n",
+        f"[View dataset on Kaggle](https://www.kaggle.com/datasets/"
+        f"{os.environ.get('KAGGLE_USERNAME', 'dariobaumberger')}/{TARGET_DATASET_DIR.name})\n",
         "## Summary",
         f"- Species before: {len(before)}",
         f"- Species after:  {len(after)}",
@@ -209,7 +210,7 @@ def generate_dataset_readme(species_to_sources_map: dict[str, set[str]]) -> None
     species_image_counts = {}
     for species in sorted(species_to_sources_map.keys()):
         species_path: Path = TARGET_DATASET_DIR / "images" / species
-        species_image_counts[species] = len(list(species_path.glob("*.webp")))
+        species_image_counts[species] = sum(1 for _ in species_path.glob("*.webp"))
 
     total_species = len(species_image_counts)
     total_images = sum(species_image_counts.values())
