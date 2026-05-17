@@ -57,7 +57,11 @@ uv run python -m python.download
 # Merge and deduplicate into data/combined-kaggle-mushrooms-dataset
 uv run python -m python.merge
 
-# Publish to Kaggle
+# Dry run (validates credentials and shows what would be uploaded, without actually uploading)
+uv run python -m python.publish --dry-run
+uv run python -m python.publish --dry-run "optional version notes"
+
+# Publish to Kaggle (runs in pipeline, no need to run manualy)
 uv run python -m python.publish "optional version notes"
 ```
 

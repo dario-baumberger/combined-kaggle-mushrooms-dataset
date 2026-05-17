@@ -25,6 +25,17 @@ This project was developed as part of a Data Science Project Module at [HSLU (Ho
 | [derekkunowilliams/mushrooms](https://www.kaggle.com/datasets/derekkunowilliams/mushrooms) | This dataset contains images of different mushroom species. | [ODbL v1.0](https://opendatacommons.org/licenses/odbl/1-0/) |
 | [tinkhoav/mushroom-classification](https://www.kaggle.com/datasets/tinkhoav/mushroom-classification) | 83.7k files, 277 folders | [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) |
 
+### Checked but rejected
+| Dataset | Reason |
+|---|---|
+|[vegameta23/mushrooms-specified](https://www.kaggle.com/datasets/vegameta23/mushrooms-specified)|Unknown licence|
+|[anilkrsah/deepmushroom](https://www.kaggle.com/datasets/anilkrsah/deepmushroom)|Only genus name|
+|[hakanerdemm/mushroom-classification-dataset](https://www.kaggle.com/datasets/hakanerdemm/mushroom-classification-dataset)|No species|
+|[ilyakondrusevich/mushrooms](https://www.kaggle.com/datasets/ilyakondrusevich/mushrooms)|Requires remapping to get full names|
+|[zedsden/mushroom-classification-dataset](https://www.kaggle.com/datasets/zedsden/mushroom-classification-dataset)|Contains english names and also genus names|
+|[benedictusjason/edible-and-poisonous-mushroom-classification](https://www.kaggle.com/datasets/benedictusjason/edible-and-poisonous-mushroom-classification)|Structured in filenames, not folders|
+
+
 ## License
 
 [CC BY-NC 4.0](LICENSE) — free to use and adapt with attribution, not for commercial purposes.
