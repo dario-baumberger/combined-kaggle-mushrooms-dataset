@@ -1,9 +1,11 @@
 Licenses
 
 This dataset is a combination of multiple source datasets, each with their own license.
-The combined dataset is governed by the most restrictive terms of its sources.
+When using or redistributing the combined dataset (or any subset), you must comply with the terms of each applicable source license listed below.
 
 Combined Dataset License
+
+Note: Some license terms may be incompatible with each other for certain kinds of redistribution (e.g., applying additional downstream restrictions). If you plan to redistribute or commercialize any portion of the dataset, review the source licenses carefully.
 
 - No commercial use: inherited from CC BY-NC 4.0 sources
 - Share-alike on data: inherited from ODbL v1.0; any redistributed or derived dataset must remain under ODbL v1.0
