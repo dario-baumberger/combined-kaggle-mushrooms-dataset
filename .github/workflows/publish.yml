@@ -71,15 +71,6 @@ jobs:
           TQDM_MININTERVAL: '10'
         run: uv run python -m python.publish "${{ github.event.inputs.version_notes }}"${{ github.event.inputs.dry_run == 'true' && ' --dry-run' || '' }}
 
-      - name: Create GitHub Release
-        if: steps.publish.outputs.kaggle_version != '' && github.event.inputs.dry_run != 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release create "v${{ steps.publish.outputs.kaggle_version }}" \
-            --title "Dataset v${{ steps.publish.outputs.kaggle_version }}" \
-            --notes-file data/combined-kaggle-mushrooms-dataset/CHANGELOG.md
-
       - name: Commit species snapshot
         if: github.event.inputs.dry_run != 'true'
         run: |
@@ -88,3 +79,12 @@ jobs:
           git add species_snapshot.json
           git diff --cached --quiet || git commit -m "chore: update species snapshot [skip ci]"
           git push
+
+      - name: Create GitHub Release
+        if: steps.publish.outputs.kaggle_version != '' && github.event.inputs.dry_run != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ steps.publish.outputs.kaggle_version }}" \
+            --title "Dataset v${{ steps.publish.outputs.kaggle_version }}" \
+            --notes-file data/combined-kaggle-mushrooms-dataset/CHANGELOG.md
