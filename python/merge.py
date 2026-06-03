@@ -232,8 +232,14 @@ def generate_dataset_readme(species_to_sources_map: dict[str, set[str]]) -> None
 def main(max_workers: int = os.cpu_count(), batch_size: int = 1000) -> None:
     before_snapshot = snapshot_species_image_counts(TARGET_DATASET_DIR)
     if not before_snapshot and SPECIES_SNAPSHOT_PATH.exists():
-        before_snapshot = json.loads(SPECIES_SNAPSHOT_PATH.read_text(encoding="utf-8"))
-        logger.info(f"Loaded before-snapshot from {SPECIES_SNAPSHOT_PATH} ({len(before_snapshot)} species)")
+        try:
+            raw_snapshot = json.loads(SPECIES_SNAPSHOT_PATH.read_text(encoding="utf-8"))
+            if not isinstance(raw_snapshot, dict):
+                raise ValueError("snapshot root is not a JSON object")
+            before_snapshot = {str(k): int(v) for k, v in raw_snapshot.items()}
+            logger.info(f"Loaded before-snapshot from {SPECIES_SNAPSHOT_PATH} ({len(before_snapshot)} species)")
+        except (OSError, json.JSONDecodeError, TypeError, ValueError) as e:
+            logger.warning(f"Failed to load before-snapshot from {SPECIES_SNAPSHOT_PATH}: {e}")
 
     if TARGET_DATASET_DIR.exists():
         shutil.rmtree(TARGET_DATASET_DIR)
