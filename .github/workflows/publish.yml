@@ -63,7 +63,7 @@ jobs:
           name: dataset
           path: |
             data/combined-kaggle-mushrooms-dataset/
-            !data/combined-kaggle-mushrooms-dataset/images/
+            !data/combined-kaggle-mushrooms-dataset/images/**
 
       - name: Publish to Kaggle
         id: publish
