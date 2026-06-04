@@ -57,11 +57,13 @@ jobs:
           TQDM_MININTERVAL: '10'
         run: uv run python -m python.validate
 
-      - name: Upload changelog artifact
+      - name: Upload dataset artifact
         uses: actions/upload-artifact@v4
         with:
-          name: changelog
-          path: data/combined-kaggle-mushrooms-dataset/CHANGELOG.md
+          name: dataset
+          path: |
+            data/combined-kaggle-mushrooms-dataset/
+            !data/combined-kaggle-mushrooms-dataset/images/
 
       - name: Publish to Kaggle
         id: publish
