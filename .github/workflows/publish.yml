@@ -71,6 +71,15 @@ jobs:
           TQDM_MININTERVAL: '10'
         run: uv run python -m python.publish "${{ github.event.inputs.version_notes }}"${{ github.event.inputs.dry_run == 'true' && ' --dry-run' || '' }}
 
+      - name: Commit species snapshot
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add species_snapshot.json
+          git diff --cached --quiet || git commit -m "chore: update species snapshot [skip ci]"
+          git push
+
       - name: Create GitHub Release
         if: steps.publish.outputs.kaggle_version != '' && github.event.inputs.dry_run != 'true'
         env:

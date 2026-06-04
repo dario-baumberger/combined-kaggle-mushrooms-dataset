@@ -1,5 +1,6 @@
 import hashlib
 import io
+import json
 import logging
 import os
 import shutil
@@ -22,6 +23,7 @@ class DatasetInfo(TypedDict, total=False):
 
 
 TARGET_DATASET_DIR: Path = Path("data/combined-kaggle-mushrooms-dataset")
+SPECIES_SNAPSHOT_PATH: Path = Path("species_snapshot.json")
 SUPPORTED_IMAGE_EXTENSIONS: set[str] = {".jpg", ".jpeg", ".png", ".webp"}
 
 DATASET_METADATA: dict[str, DatasetInfo] = {
@@ -229,6 +231,15 @@ def generate_dataset_readme(species_to_sources_map: dict[str, set[str]]) -> None
 
 def main(max_workers: int = os.cpu_count(), batch_size: int = 1000) -> None:
     before_snapshot = snapshot_species_image_counts(TARGET_DATASET_DIR)
+    if not before_snapshot and SPECIES_SNAPSHOT_PATH.exists():
+        try:
+            raw_snapshot = json.loads(SPECIES_SNAPSHOT_PATH.read_text(encoding="utf-8"))
+            if not isinstance(raw_snapshot, dict):
+                raise ValueError("snapshot root is not a JSON object")
+            before_snapshot = {str(k): int(v) for k, v in raw_snapshot.items()}
+            logger.info(f"Loaded before-snapshot from {SPECIES_SNAPSHOT_PATH} ({len(before_snapshot)} species)")
+        except (OSError, json.JSONDecodeError, TypeError, ValueError) as e:
+            logger.warning(f"Failed to load before-snapshot from {SPECIES_SNAPSHOT_PATH}: {e}")
 
     if TARGET_DATASET_DIR.exists():
         shutil.rmtree(TARGET_DATASET_DIR)
@@ -316,6 +327,8 @@ def main(max_workers: int = os.cpu_count(), batch_size: int = 1000) -> None:
     changelog_path = TARGET_DATASET_DIR / "CHANGELOG.md"
     generate_changelog(before_snapshot, after_snapshot, cross_species_duplicates, changelog_path)
     logger.info(f"Changelog written to {changelog_path}")
+    SPECIES_SNAPSHOT_PATH.write_text(json.dumps(after_snapshot, indent=2, sort_keys=True), encoding="utf-8")
+    logger.info(f"Species snapshot written to {SPECIES_SNAPSHOT_PATH}")
     logger.info(f"Complete. Dataset at {TARGET_DATASET_DIR}")
 
 
